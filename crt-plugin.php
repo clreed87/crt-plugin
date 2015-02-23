@@ -152,7 +152,7 @@ function crt_change_feed_post_title( $title ) {
 	}
 }
 
-//* Changle permalink to external URL in RSS feed for link posts
+//* Change permalink to external URL in RSS feed for link posts
 add_filter( 'the_permalink_rss', 'crt_change_feed_permalink' );
 function crt_change_feed_permalink( $permalink ) {
 	$link_url = get_field( 'link_url' );
