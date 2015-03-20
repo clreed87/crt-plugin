@@ -197,6 +197,7 @@ function crt_jetpack_whitelist() {
 		'monitor',
 		'notes',
 		'photon',
+		'protect',
 		'publicize',
 		'shortlinks',
 		'stats',
