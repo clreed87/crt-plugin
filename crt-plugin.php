@@ -20,7 +20,7 @@ function crt_portfolio_post_type() {
 			'menu_icon'           => 'dashicons-portfolio',
 			'public'              => true,
 			'rewrite'             => array( 'slug' => 'portfolio', 'with_front' => false ),
-			'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'revisions', 'page-attributes', 'genesis-seo', 'genesis-cpt-archives-settings' ),
+			'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'revisions', 'page-attributes', 'genesis-seo', 'genesis-cpt-archives-settings', 'wpcom-markdown' ),
 			'taxonomies'    => array( 'project_type', 'project_feature' ),
 		)
 	);
