@@ -246,8 +246,10 @@ function crt_force_deactivate_non_whitelisted() {
 //* Ignore updates for Advanced Custom Fields
 add_filter( 'site_transient_update_plugins', 'crt_filter_plugin_updates' );
 function crt_filter_plugin_updates( $value ) {
-    unset( $value->response['advanced-custom-fields-pro/acf.php'] );
-    return $value;
+    if ( isset( $value->response['advanced-custom-fields-pro/acf.php'] ) ) {
+    	unset( $value->response['advanced-custom-fields-pro/acf.php'] );
+    }
+	return $value;
 }
 
 /* Stop Adding Functions Below this Line */
