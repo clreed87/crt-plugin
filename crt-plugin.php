@@ -30,7 +30,7 @@ function crt_portfolio_post_type() {
 		'label'               => __( 'portfolio', 'crt' ),
 		'description'         => __( 'Custom post type for portfolio items', 'crt' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'trackbacks', 'revisions', 'custom-fields', 'page-attributes', 'genesis-seo', 'genesis-cpt-archives-settings', 'publicize', 'wpcom-markdown'  ),
+		'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'trackbacks', 'revisions', 'custom-fields', 'page-attributes', 'genesis-seo', 'genesis-cpt-archives-settings', 'publicize', 'shortlinks', 'wpcom-markdown'  ),
 		'taxonomies'          => array( 'project_type', 'project_feature' ),
 		'hierarchical'        => true,
 		'public'              => true,
