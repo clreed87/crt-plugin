@@ -214,6 +214,7 @@ function crt_feed_permalink( $content ) {
 function crt_jetpack_whitelist() {
 	$whitelist = array(
 		'carousel',
+		'contact-form',
 		'enhanced-distribution',
 		'json-api',
 		'markdown',
