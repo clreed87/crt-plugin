@@ -248,7 +248,6 @@ function crt_make_non_whitelisted_unavailable( $modules ) {
 	return $modules;
 }
 
-
 add_action( 'init', 'crt_force_deactivate_non_whitelisted' );
 /**
  * Force disable all non-whitelisted Jetpack modules.
