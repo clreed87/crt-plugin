@@ -134,7 +134,7 @@ function crt_project_feature_taxonomy() {
 
 }
 
-//* Only support featured images on post and portfolio post types
+//* Only support featured images on portfolio post types
 add_action( 'after_setup_theme', 'crt_remove_featured_images' );
 function crt_remove_featured_images() {
 
