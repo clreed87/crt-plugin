@@ -6,119 +6,142 @@ Description: Site specific code changes for Chris Reed Tech project sites
 /* Start Adding Functions Below this Line */
 
 //* Create portfolio custom post type
-add_action( 'init', 'crt_portfolio_post_type' );
+add_action( 'init', 'crt_portfolio_post_type', 0 );
 function crt_portfolio_post_type() {
 
-	register_post_type( 'portfolio',
-		array(
-			'labels' => array(
-				'name'          => __( 'Portfolio', 'crt' ),
-				'singular_name' => __( 'Portfolio', 'crt' ),
-			),
-			'has_archive'         => true,
-			'hierarchical'        => true,
-			'menu_icon'           => 'dashicons-portfolio',
-			'public'              => true,
-			'rewrite'             => array( 'slug' => 'portfolio', 'with_front' => false ),
-			'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'revisions', 'page-attributes', 'genesis-seo', 'genesis-cpt-archives-settings', 'wpcom-markdown' ),
-			'taxonomies'    => array( 'project_type', 'project_feature' ),
-		)
+	$labels = array(
+		'name'                => _x( 'Portfolio', 'Post Type General Name', 'crt' ),
+		'singular_name'       => _x( 'Portfolio Project', 'Post Type Singular Name', 'crt' ),
+		'menu_name'           => __( 'Portfolio', 'crt' ),
+		'name_admin_bar'      => __( 'Portfolio Project', 'crt' ),
+		'parent_item_colon'   => __( 'Parent Portfolio Project:', 'crt' ),
+		'all_items'           => __( 'All Portfolio Projects', 'crt' ),
+		'add_new_item'        => __( 'Add New Portfolio Project', 'crt' ),
+		'add_new'             => __( 'Add New', 'crt' ),
+		'new_item'            => __( 'New Portfolio Project', 'crt' ),
+		'edit_item'           => __( 'Edit Portfolio Project', 'crt' ),
+		'update_item'         => __( 'Update Portfolio Project', 'crt' ),
+		'view_item'           => __( 'View Portfolio Project', 'crt' ),
+		'search_items'        => __( 'Search Portfolio', 'crt' ),
+		'not_found'           => __( 'Portfolio Project Not Found', 'crt' ),
+		'not_found_in_trash'  => __( 'Portfolio Project Not Found in Trash', 'crt' ),
 	);
+	$args = array(
+		'label'               => __( 'portfolio', 'crt' ),
+		'description'         => __( 'Custom post type for portfolio items', 'crt' ),
+		'labels'              => $labels,
+		'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'trackbacks', 'revisions', 'custom-fields', 'page-attributes', 'genesis-seo', 'genesis-cpt-archives-settings', 'publicize', 'wpcom-markdown'  ),
+		'taxonomies'          => array( 'project_type', 'project_feature' ),
+		'hierarchical'        => true,
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'menu_position'       => 20,
+		'menu_icon'           => 'dashicons-portfolio',
+		'show_in_admin_bar'   => true,
+		'show_in_nav_menus'   => true,
+		'can_export'          => true,
+		'has_archive'         => true,
+		'exclude_from_search' => false,
+		'publicly_queryable'  => true,
+		'capability_type'     => 'page',
+	);
+	register_post_type( 'portfolio', $args );
 
 }
 
 //* Create project type custom taxonomy
-add_action( 'init', 'crt_project_type_taxonomy' );
+add_action( 'init', 'crt_project_type_taxonomy', 0 );
 function crt_project_type_taxonomy() {
 
 	$labels = array(
-		'name' => _x( 'Project Types', 'crt' ),
-		'singular_name' => _x( 'Project Type', 'crt' ),
-		'search_items' => _x( 'Search Project Types', 'crt' ),
-		'popular_items' => _x( 'Popular Project Types', 'crt' ),
-		'all_items' => _x( 'All Project Types', 'crt' ),
-		'parent_item' => _x( 'Parent Project Type', 'crt' ),
-		'parent_item_colon' => _x( 'Parent Project Type:', 'crt' ),
-		'edit_item' => _x( 'Edit Project Type', 'crt' ),
-		'update_item' => _x( 'Update Project Type', 'crt' ),
-		'add_new_item' => _x( 'Add New Project Type', 'crt' ),
-		'new_item_name' => _x( 'New Project Type', 'crt' ),
-		'separate_items_with_commas' => _x( 'Separate project types with commas', 'crt' ),
-		'add_or_remove_items' => _x( 'Add or remove project types', 'crt' ),
-		'choose_from_most_used' => _x( 'Choose from the most used project types', 'crt' ),
-		'menu_name' => _x( 'Project Types', 'crt' ),
+		'name'                       => _x( 'Project Types', 'Taxonomy General Name', 'crt' ),
+		'singular_name'              => _x( 'Project Type', 'Taxonomy Singular Name', 'crt' ),
+		'menu_name'                  => __( 'Project Type', 'crt' ),
+		'all_items'                  => __( 'All Project Types', 'crt' ),
+		'parent_item'                => __( 'Parent Project Type', 'crt' ),
+		'parent_item_colon'          => __( 'Parent Project Type:', 'crt' ),
+		'new_item_name'              => __( 'New Project Type Name', 'crt' ),
+		'add_new_item'               => __( 'Add New Project Type', 'crt' ),
+		'edit_item'                  => __( 'Edit Project Type', 'crt' ),
+		'update_item'                => __( 'Update Project Type', 'crt' ),
+		'view_item'                  => __( 'View Project Type', 'crt' ),
+		'separate_items_with_commas' => __( 'Separate project types with commas', 'crt' ),
+		'add_or_remove_items'        => __( 'Add or remove project types', 'crt' ),
+		'choose_from_most_used'      => __( 'Choose from the most used project types', 'crt' ),
+		'popular_items'              => __( 'Popular Project Types', 'crt' ),
+		'search_items'               => __( 'Search Project Types', 'crt' ),
+		'not_found'                  => __( 'Project Type Not Found', 'crt' ),
 	);
-
+	$rewrite = array(
+		'slug'                       => 'project-type',
+		'with_front'                 => true,
+		'hierarchical'               => false,
+	);
 	$args = array(
-		'labels' => $labels,
-		'public' => true,
-		'show_in_nav_menus' => true,
-		'show_ui' => true,
-		'show_tagcloud' => true,
-		'show_admin_column' => true,
-		'hierarchical' => true,
-		'rewrite' => array( 'slug' => 'project-type', 'with_front' => false ),
-		'query_var' => true
+		'labels'                     => $labels,
+		'hierarchical'               => true,
+		'public'                     => true,
+		'show_ui'                    => true,
+		'show_admin_column'          => true,
+		'show_in_nav_menus'          => true,
+		'show_tagcloud'              => true,
+		'rewrite'                    => $rewrite,
 	);
+	register_taxonomy( 'project_type', array( 'portfolio' ), $args );
 
-	register_taxonomy( 'project_type', array('portfolio'), $args );
 }
 
 //* Create project feature custom taxonomy
-add_action( 'init', 'crt_project_feature_taxonomy' );
+add_action( 'init', 'crt_project_feature_taxonomy', 0 );
 function crt_project_feature_taxonomy() {
 
 	$labels = array(
-		'name' => _x( 'Project Features', 'crt' ),
-		'singular_name' => _x( 'Project Feature', 'crt' ),
-		'search_items' => _x( 'Search Project Features', 'crt' ),
-		'popular_items' => _x( 'Popular Project Features', 'crt' ),
-		'all_items' => _x( 'All Project Features', 'crt' ),
-		'parent_item' => _x( 'Parent Project Feature', 'crt' ),
-		'parent_item_colon' => _x( 'Parent Project Feature:', 'crt' ),
-		'edit_item' => _x( 'Edit Project Feature', 'crt' ),
-		'update_item' => _x( 'Update Project Feature', 'crt' ),
-		'add_new_item' => _x( 'Add New Project Feature', 'crt' ),
-		'new_item_name' => _x( 'New Project Feature', 'crt' ),
-		'separate_items_with_commas' => _x( 'Separate project features with commas', 'crt' ),
-		'add_or_remove_items' => _x( 'Add or remove project features', 'crt' ),
-		'choose_from_most_used' => _x( 'Choose from most used project features', 'crt' ),
-		'menu_name' => _x( 'Project Features', 'crt' ),
+		'name'                       => _x( 'Project Features', 'Taxonomy General Name', 'crt' ),
+		'singular_name'              => _x( 'Project Feature', 'Taxonomy Singular Name', 'crt' ),
+		'menu_name'                  => __( 'Project Feature', 'crt' ),
+		'all_items'                  => __( 'All Project Features', 'crt' ),
+		'parent_item'                => __( 'Parent Project Feature', 'crt' ),
+		'parent_item_colon'          => __( 'Parent Project Feature:', 'crt' ),
+		'new_item_name'              => __( 'New Project Feature Name', 'crt' ),
+		'add_new_item'               => __( 'Add New Project Feature', 'crt' ),
+		'edit_item'                  => __( 'Edit Project Feature', 'crt' ),
+		'update_item'                => __( 'Update Project Feature', 'crt' ),
+		'view_item'                  => __( 'View Project Feature', 'crt' ),
+		'separate_items_with_commas' => __( 'Separate project features with commas', 'crt' ),
+		'add_or_remove_items'        => __( 'Add or remove project features', 'crt' ),
+		'choose_from_most_used'      => __( 'Choose from the most used project features', 'crt' ),
+		'popular_items'              => __( 'Popular Project Features', 'crt' ),
+		'search_items'               => __( 'Search Project Features', 'crt' ),
+		'not_found'                  => __( 'Project Feature Not Found', 'crt' ),
 	);
-
+	$rewrite = array(
+		'slug'                       => 'project-feature',
+		'with_front'                 => true,
+		'hierarchical'               => false,
+	);
 	$args = array(
-		'labels' => $labels,
-		'public' => true,
-		'show_in_nav_menus' => true,
-		'show_ui' => true,
-		'show_tagcloud' => true,
-		'show_admin_column' => true,
-		'hierarchical' => false,
-		'rewrite' => array( 'slug' => 'project-feature', 'with_front' => false ),
-		'query_var' => true
+		'labels'                     => $labels,
+		'hierarchical'               => false,
+		'public'                     => true,
+		'show_ui'                    => true,
+		'show_admin_column'          => true,
+		'show_in_nav_menus'          => true,
+		'show_tagcloud'              => true,
+		'rewrite'                    => $rewrite,
 	);
-
-	register_taxonomy( 'project_feature', array('portfolio'), $args );
-}
-
-//* Add portfolio taxonomies to columns
-add_filter( 'manage_taxonomies_for_portfolio_columns', 'crt_portfolio_columns' );
-function crt_portfolio_columns( $taxonomies ) {
-
-	$taxonomies[] = 'project_type';
-	$taxonomies[] = 'project_technology';
-	return $taxonomies;
+	register_taxonomy( 'project_feature', array( 'portfolio' ), $args );
 
 }
 
 //* Only support featured images on post and portfolio post types
-add_action( 'after_setup_theme', 'crt_remove_featured_images', 11 );
+add_action( 'after_setup_theme', 'crt_remove_featured_images' );
 function crt_remove_featured_images() {
 
-	// This will remove support for post thumbnails on ALL Post Types
+	// Remove support for post thumbnails on all post types
 	remove_theme_support( 'post-thumbnails' );
 
-	// Add this line in to re-enable support for just Posts and Portfolio
+	// Re-enable support for just portfolio items
 	add_theme_support( 'post-thumbnails', array( 'portfolio' ) );
 }
 
