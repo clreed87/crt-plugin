@@ -217,6 +217,7 @@ function crt_jetpack_whitelist() {
 		'contact-form',
 		'enhanced-distribution',
 		'json-api',
+		'manage',
 		'markdown',
 		'monitor',
 		'notes',
