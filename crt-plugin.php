@@ -44,6 +44,7 @@ function crt_portfolio_post_type() {
 		'has_archive'         => true,
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
+		'show_in_rest'        => true,
 		'capability_type'     => 'page',
 	);
 	register_post_type( 'portfolio', $args );
@@ -86,6 +87,7 @@ function crt_project_type_taxonomy() {
 		'show_admin_column'          => true,
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => true,
+		'show_in_rest'               => true,
 		'rewrite'                    => $rewrite,
 	);
 	register_taxonomy( 'project_type', array( 'portfolio' ), $args );
@@ -128,6 +130,7 @@ function crt_project_feature_taxonomy() {
 		'show_admin_column'          => true,
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => true,
+		'show_in_rest'               => true,
 		'rewrite'                    => $rewrite,
 	);
 	register_taxonomy( 'project_feature', array( 'portfolio' ), $args );
