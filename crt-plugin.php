@@ -26,6 +26,7 @@ function crt_portfolio_post_type() {
 		'not_found'           => __( 'Portfolio Project Not Found', 'crt' ),
 		'not_found_in_trash'  => __( 'Portfolio Project Not Found in Trash', 'crt' ),
 	);
+	
 	$args = array(
 		'label'               => __( 'portfolio', 'crt' ),
 		'description'         => __( 'Custom post type for portfolio items', 'crt' ),
@@ -47,6 +48,7 @@ function crt_portfolio_post_type() {
 		'show_in_rest'        => true,
 		'capability_type'     => 'page',
 	);
+	
 	register_post_type( 'portfolio', $args );
 
 }
@@ -74,11 +76,13 @@ function crt_project_type_taxonomy() {
 		'search_items'               => __( 'Search Project Types', 'crt' ),
 		'not_found'                  => __( 'Project Type Not Found', 'crt' ),
 	);
+	
 	$rewrite = array(
 		'slug'                       => 'project-type',
 		'with_front'                 => true,
 		'hierarchical'               => false,
 	);
+	
 	$args = array(
 		'labels'                     => $labels,
 		'hierarchical'               => true,
@@ -90,6 +94,7 @@ function crt_project_type_taxonomy() {
 		'show_in_rest'               => true,
 		'rewrite'                    => $rewrite,
 	);
+	
 	register_taxonomy( 'project_type', array( 'portfolio' ), $args );
 
 }
@@ -117,11 +122,13 @@ function crt_project_feature_taxonomy() {
 		'search_items'               => __( 'Search Project Features', 'crt' ),
 		'not_found'                  => __( 'Project Feature Not Found', 'crt' ),
 	);
+	
 	$rewrite = array(
 		'slug'                       => 'project-feature',
 		'with_front'                 => true,
 		'hierarchical'               => false,
 	);
+	
 	$args = array(
 		'labels'                     => $labels,
 		'hierarchical'               => false,
@@ -133,6 +140,7 @@ function crt_project_feature_taxonomy() {
 		'show_in_rest'               => true,
 		'rewrite'                    => $rewrite,
 	);
+	
 	register_taxonomy( 'project_feature', array( 'portfolio' ), $args );
 
 }
@@ -151,61 +159,79 @@ function crt_remove_featured_images() {
 //* Limit number of post revisions to keep
 add_filter( 'wp_revisions_to_keep', 'crt_limit_revisions', 10, 2 );
 function crt_limit_revisions( $num, $post ) {
+
 	$num = 5;
 	return $num;
+	
 }
 
 //* Add support for link post format
 add_theme_support( 'post-formats', array(
+
 		'link',
+	
 	) );
 
 //* Change post titles in RSS feed for link and sponsored posts
 add_filter( 'the_title_rss', 'crt_change_feed_post_title' );
 function crt_change_feed_post_title( $title ) {
+	
 	$link_url = get_field( 'link_url' );
 	$sponsored_post = get_field( 'sponsored_post' );
+	
 	if ( has_post_format( 'link' )  && ( $sponsored_post == true ) && !empty( $link_url ) ) {
+		
 		$title = get_the_title().' [Sponsor] →';
-		return $title;
+	
 	}
+	
 	else if ( has_post_format( 'link' )  && !empty( $link_url ) ) {
+		
 		$title = get_the_title().' →';
-		return $title;
+	
 	}
-	else {
-		return $title;
-	}
+	
+	return $title;
+
 }
 
 //* Change permalink to external URL in RSS feed for link posts
 add_filter( 'the_permalink_rss', 'crt_change_feed_permalink' );
 function crt_change_feed_permalink( $permalink ) {
+	
 	$link_url = get_field( 'link_url' );
+	
 	if ( has_post_format( 'link' )  && !empty( $link_url ) ) {
+		
 		$permalink = $link_url;
-		return $permalink;
+	
 	}
-	else {
-		return $permalink;
-	}
+	
+	return $permalink;
+
 }
 
 //* Add link to post permalink and source in RSS feed for link posts
 add_filter( 'the_content_feed', 'crt_feed_permalink' );
 function crt_feed_permalink( $content ) {
+	
 	$link_url = get_field( 'link_url' );
+	
 	if ( has_post_format( 'link' )  && !empty( $link_url ) ) {
+		
 		$link_source = get_field( 'link_source' );
+		
 		if ( !empty( $link_source ) ) {
+			
 			$content .= 'Source: <a href="'.$link_url.'">'.$link_source.'</a><br>';
+		
 		}
+		
 		$content .= '<a href="'.get_permalink().'">☍ Permalink</a>';
-		return $content;
+	
 	}
-	else {
-		return $content;
-	}
+	
+	return $content;
 }
 
 /**
@@ -215,7 +241,9 @@ function crt_feed_permalink( $content ) {
  * to have access to. Anything not listed here will be programmatically disabled.
  */
 function crt_jetpack_whitelist() {
+	
 	$whitelist = array(
+		
 		'carousel',
 		'contact-form',
 		'enhanced-distribution',
@@ -229,10 +257,12 @@ function crt_jetpack_whitelist() {
 		'publicize',
 		'shortlinks',
 		'stats',
-		'tiled-gallery',
+		
+		'tiled-gallery', 
 	);
 
 	return $whitelist;
+
 }
 
 add_filter( 'jetpack_get_available_modules', 'crt_make_non_whitelisted_unavailable' );
@@ -246,10 +276,9 @@ add_filter( 'jetpack_get_available_modules', 'crt_make_non_whitelisted_unavailab
 function crt_make_non_whitelisted_unavailable( $modules ) {
 
 	$whitelist = crt_jetpack_whitelist();
-
 	$modules = array_intersect_key( $modules, array_flip( $whitelist ) );
-
 	return $modules;
+
 }
 
 add_action( 'init', 'crt_force_deactivate_non_whitelisted' );
@@ -261,22 +290,30 @@ add_action( 'init', 'crt_force_deactivate_non_whitelisted' );
  *
  */
 function crt_force_deactivate_non_whitelisted() {
+	
 	if ( ! class_exists( 'Jetpack_Options' ) ) {
+		
 		return;
+	
 	}
 
 	$whitelist = crt_jetpack_whitelist();
-
 	Jetpack_Options::update_option( 'active_modules', array_unique( $whitelist ) );
+
 }
 
 //* Ignore updates for Advanced Custom Fields
 add_filter( 'site_transient_update_plugins', 'crt_filter_plugin_updates' );
 function crt_filter_plugin_updates( $value ) {
+    
     if ( isset( $value->response['advanced-custom-fields-pro/acf.php'] ) ) {
+    	
     	unset( $value->response['advanced-custom-fields-pro/acf.php'] );
+    
     }
+	
 	return $value;
+
 }
 
 /* Stop Adding Functions Below this Line */
