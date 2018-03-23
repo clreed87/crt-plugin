@@ -10,6 +10,7 @@ add_action( 'init', 'crt_portfolio_post_type', 0 );
 function crt_portfolio_post_type() {
 
 	$labels = array(
+		
 		'name'                => _x( 'Portfolio', 'Post Type General Name', 'crt' ),
 		'singular_name'       => _x( 'Portfolio Project', 'Post Type Singular Name', 'crt' ),
 		'menu_name'           => __( 'Portfolio', 'crt' ),
@@ -25,9 +26,11 @@ function crt_portfolio_post_type() {
 		'search_items'        => __( 'Search Portfolio', 'crt' ),
 		'not_found'           => __( 'Portfolio Project Not Found', 'crt' ),
 		'not_found_in_trash'  => __( 'Portfolio Project Not Found in Trash', 'crt' ),
+	
 	);
 	
 	$args = array(
+		
 		'label'               => __( 'portfolio', 'crt' ),
 		'description'         => __( 'Custom post type for portfolio items', 'crt' ),
 		'labels'              => $labels,
@@ -46,6 +49,7 @@ function crt_portfolio_post_type() {
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
 		'show_in_rest'        => true,
+		
 		'capability_type'     => 'page',
 	);
 	
@@ -58,6 +62,7 @@ add_action( 'init', 'crt_project_type_taxonomy', 0 );
 function crt_project_type_taxonomy() {
 
 	$labels = array(
+		
 		'name'                       => _x( 'Project Types', 'Taxonomy General Name', 'crt' ),
 		'singular_name'              => _x( 'Project Type', 'Taxonomy Singular Name', 'crt' ),
 		'menu_name'                  => __( 'Project Type', 'crt' ),
@@ -75,15 +80,19 @@ function crt_project_type_taxonomy() {
 		'popular_items'              => __( 'Popular Project Types', 'crt' ),
 		'search_items'               => __( 'Search Project Types', 'crt' ),
 		'not_found'                  => __( 'Project Type Not Found', 'crt' ),
+	
 	);
 	
 	$rewrite = array(
+		
 		'slug'                       => 'project-type',
 		'with_front'                 => true,
 		'hierarchical'               => false,
+	
 	);
 	
 	$args = array(
+		
 		'labels'                     => $labels,
 		'hierarchical'               => true,
 		'public'                     => true,
@@ -93,6 +102,7 @@ function crt_project_type_taxonomy() {
 		'show_tagcloud'              => true,
 		'show_in_rest'               => true,
 		'rewrite'                    => $rewrite,
+	
 	);
 	
 	register_taxonomy( 'project_type', array( 'portfolio' ), $args );
@@ -104,6 +114,7 @@ add_action( 'init', 'crt_project_feature_taxonomy', 0 );
 function crt_project_feature_taxonomy() {
 
 	$labels = array(
+		
 		'name'                       => _x( 'Project Features', 'Taxonomy General Name', 'crt' ),
 		'singular_name'              => _x( 'Project Feature', 'Taxonomy Singular Name', 'crt' ),
 		'menu_name'                  => __( 'Project Feature', 'crt' ),
@@ -121,15 +132,19 @@ function crt_project_feature_taxonomy() {
 		'popular_items'              => __( 'Popular Project Features', 'crt' ),
 		'search_items'               => __( 'Search Project Features', 'crt' ),
 		'not_found'                  => __( 'Project Feature Not Found', 'crt' ),
+	
 	);
 	
 	$rewrite = array(
+		
 		'slug'                       => 'project-feature',
 		'with_front'                 => true,
 		'hierarchical'               => false,
+	
 	);
 	
 	$args = array(
+		
 		'labels'                     => $labels,
 		'hierarchical'               => false,
 		'public'                     => true,
@@ -139,6 +154,7 @@ function crt_project_feature_taxonomy() {
 		'show_tagcloud'              => true,
 		'show_in_rest'               => true,
 		'rewrite'                    => $rewrite,
+	
 	);
 	
 	register_taxonomy( 'project_feature', array( 'portfolio' ), $args );
