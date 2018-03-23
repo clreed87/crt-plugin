@@ -165,6 +165,56 @@ function crt_limit_revisions( $num, $post ) {
 	
 }
 
+//* Change post title to date if no title is provided
+add_filter( 'wp_insert_post_data', 'crt_update_blank_title' );
+function crt_update_blank_title( $data ) {
+
+	$title = $data['post_title'];
+	$post_type = $data['post_type'];
+	
+	if ( empty( $title ) && ( $post_type == 'post' ) ) {
+
+		$timezone = get_option('timezone_string');
+		date_default_timezone_set( $timezone );
+		$title = date( 'Y-m-d H.i.s' );
+		$data['post_title'] = $title;
+
+	}
+
+	return $data;
+
+}
+
+// Populate image title, alt-text, caption, and description on upload
+add_action( 'add_attachment', 'crt_set_image_meta' );
+function crt_set_image_meta( $post_ID ) {
+
+	// Check if uploaded file is an image, else do nothing
+	if ( wp_attachment_is_image( $post_ID ) ) {
+
+		// Set image meta to 'Status: Date'
+		$timezone = get_option('timezone_string');
+		date_default_timezone_set( $timezone );
+		$image_title = 'Status: '.date( 'Y-m-d H.i.s' );
+		$image_meta = array(
+
+			'ID'			=> $post_ID,
+			'post_title'	=> $image_title,
+			'post_excerpt'	=> $image_title,
+			'post_content'	=> $image_title,
+
+		);
+
+		// Set the image alt-text
+		update_post_meta( $post_ID, '_wp_attachment_image_alt', $image_title );
+
+		// Set the image meta
+		wp_update_post( $image_meta );
+
+	}
+
+}
+
 //* Add support for link post format
 add_theme_support( 'post-formats', array(
 
