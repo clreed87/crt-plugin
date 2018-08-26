@@ -170,6 +170,7 @@ function crt_remove_featured_images() {
 
 	// Re-enable support for just portfolio items
 	add_theme_support( 'post-thumbnails', array( 'portfolio' ) );
+
 }
 
 //* Limit number of post revisions to keep
